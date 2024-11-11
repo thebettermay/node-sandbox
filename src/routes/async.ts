@@ -5,7 +5,8 @@ const router = Router();
 
 const runWorker = async (id: number) => {
   return new Promise((resolve, reject) => {
-    const worker = new Worker("./dist/workers/factorial.js", {
+    const workerPath = new URL("../workers/factorial.ts", import.meta.url);
+    const worker = new Worker(workerPath, {
       workerData: id,
     });
 
