@@ -11,6 +11,6 @@
     "allowSyntheticDefaultImports": true,
     "baseUrl": "./"
   },
-  "include": ["**/*.ts", "dist/ac3877a3e9a401d3672f.js"],
+  "include": ["**/*.ts"],
   "exclude": ["node_modules", "dist"]
 }
