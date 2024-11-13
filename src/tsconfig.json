@@ -1,7 +1,8 @@
 {
   "compilerOptions": {
-    "module": "ES2020",
+    "module": "ESNext",
     "moduleResolution": "node",
+    "target": "ESNext",
     "outDir": "./dist",
     "rootDir": "./",
     "strict": true,
@@ -10,6 +11,6 @@
     "allowSyntheticDefaultImports": true,
     "baseUrl": "./"
   },
-  "include": ["**/*.ts"],
+  "include": ["**/*.ts", "dist/ac3877a3e9a401d3672f.js"],
   "exclude": ["node_modules", "dist"]
 }

@@ -1,26 +1,33 @@
 import path from "path";
 
 export default {
-  mode: "development", // Change to 'production' for production builds
-  entry: "./index.ts", // Your main entry file
+  mode: "development",
+  entry: "./index.ts",
   externals: {
-    "pg-native": "commonjs pg-native", // Exclude pg-native from the bundle
+    "pg-native": "commonjs pg-native",
   },
-  target: "node", // Targeting Node.js environment
+  target: "node",
   module: {
     rules: [
       {
-        test: /\.tsx?$/, // Matches .ts and .tsx files
+        test: /\.tsx?$/,
         use: "ts-loader",
         exclude: /node_modules/,
       },
     ],
   },
   resolve: {
-    extensions: [".tsx", ".ts", ".js"], // Resolve these extensions
+    extensions: [".tsx", ".ts", ".js"],
   },
   output: {
-    filename: "bundle.mjs", // Output file name
-    path: path.resolve(path.dirname(new URL(import.meta.url).pathname), "dist"), // Output directory
+    filename: "bundle.mjs",
+    path: path.resolve(path.dirname(new URL(import.meta.url).pathname), "dist"),
+    module: true,
+    environment: {
+      module: true,
+    },
+  },
+  experiments: {
+    outputModule: true,
   },
 };
