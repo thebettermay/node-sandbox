@@ -2,10 +2,12 @@ import { createSchema } from "./database";
 import express, { NextFunction, Response, Request } from "express";
 import { Client } from "pg";
 import { createClient } from "redis";
+import compression from "compression";
 import syncRoute from "./routes/sync";
 import asyncRoute from "./routes/async";
 
 const app = express();
+app.use(compression());
 const port = 3000;
 
 const dbClient = new Client({

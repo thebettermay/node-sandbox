@@ -1,6 +1,8 @@
 import path from "path";
 
-export default {
+const __dirname = path.dirname(new URL(import.meta.url).pathname);
+
+const mainConfig = {
   mode: "development",
   entry: "./index.ts",
   externals: {
@@ -21,7 +23,7 @@ export default {
   },
   output: {
     filename: "bundle.mjs",
-    path: path.resolve(path.dirname(new URL(import.meta.url).pathname), "dist"),
+    path: path.resolve(__dirname, "dist"),
     module: true,
     environment: {
       module: true,
@@ -31,3 +33,35 @@ export default {
     outputModule: true,
   },
 };
+
+const workerConfig = {
+  mode: "development",
+  entry: "./workers/factorial.ts", // Path to your worker file
+  target: "node",
+  module: {
+    rules: [
+      {
+        test: /\.tsx?$/,
+        use: "ts-loader",
+        exclude: /node_modules/,
+      },
+    ],
+  },
+  resolve: {
+    extensions: [".tsx", ".ts", ".js"],
+  },
+  output: {
+    filename: "factorial.mjs",
+    path: path.resolve(__dirname, "dist/workers"),
+    module: true,
+    environment: {
+      module: true,
+    },
+  },
+  experiments: {
+    outputModule: true,
+  },
+};
+
+// Export both configurations as an array
+export default [mainConfig, workerConfig];

@@ -6,6 +6,15 @@ const factorial = (n: number): number => {
   return n <= 1 ? 1 : n * factorial(n - 1);
 };
 
+export const expensiveTask = (msg: string, delay: number = 1000): Promise<string> => {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      console.log("Expensive task completed.");
+      resolve(`${msg} - Done in ${delay} ms`);
+    }, delay);
+  });
+};
+
 // Synchronous Route
 router.get("/sync", async (req: Request, res: Response) => {
   console.time("syncProcessing");
@@ -16,6 +25,8 @@ router.get("/sync", async (req: Request, res: Response) => {
     const result = await req.dbClient.query("SELECT id FROM tasks LIMIT 1000");
     console.log("Database query completed.");
     const tasks = result.rows;
+
+    const longTaskDone = await expensiveTask('Long Task Done');
 
     const results = tasks.map((task) => ({
       id: task.id,
@@ -32,7 +43,7 @@ router.get("/sync", async (req: Request, res: Response) => {
                 <title>Sync Processing Results</title>
             </head>
             <body>
-                <h1>Sync Processing Results</h1>
+                <h1>Sync Processing Results after ${longTaskDone}}</h1>
                 <p>Time taken: ${duration} ms</p>
                 <h2>Tasks:</h2>
                 <ul>

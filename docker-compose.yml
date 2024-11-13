@@ -1,10 +1,28 @@
 version: "3.8"
 
 services:
-  app:
+  # app:
+  #   build:
+  #     context: ./src
+  #   environment:
+  #     - NODE_ENV=development
+  #     - DATABASE_URL=postgres://user:password@db:5432/mydatabase
+  #     - REDIS_URL=redis://redis:6379
+  #     - WORKER_COUNT=8
+  #   depends_on:
+  #     - db
+  #     - redis
+  #   ports:
+  #     - "3000:3000"
+  appdev:
     build:
       context: ./src
+      dockerfile: Dockerfile_Dev
+    volumes:
+      - .:/usr/src/app # Mount the code for live reloading
+      - /usr/src/app/node_modules # Avoid re-installing node_modules
     environment:
+      - CHOKIDAR_USEPOLLING=true # Enables polling to detect file changes
       - NODE_ENV=development
       - DATABASE_URL=postgres://user:password@db:5432/mydatabase
       - REDIS_URL=redis://redis:6379
@@ -14,7 +32,6 @@ services:
       - redis
     ports:
       - "3000:3000"
-
   db:
     image: postgres:latest
     restart: always
