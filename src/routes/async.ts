@@ -5,9 +5,12 @@ const router = Router();
 
 const runWorker = async (id: number) => {
   return new Promise((resolve, reject) => {
-    const worker = new Worker("./dist/workers/factorial.js", {
-      workerData: id,
-    });
+    const worker = new Worker(
+      new URL("../workers/factorial.ts", import.meta.url),
+      {
+        workerData: id,
+      }
+    );
 
     worker.on("message", (res) => {
       resolve(res);
